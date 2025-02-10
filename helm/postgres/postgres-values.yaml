@@ -1,0 +1,28 @@
+global:
+  storageClass: ""
+
+auth:
+  enablePostgresUser: true  # 기본 postgres 사용자 활성화
+  username: myuser           # 사용자 이름
+  password: mypassword       # 비밀번호
+  database: mydb             # 생성할 데이터베이스 이름
+  existingSecret: ""         # 기존 Secret이 있는 경우 지정 가능
+
+primary:
+  persistence:
+    enabled: true            # 데이터 영구 저장 여부
+    size: 2Gi                # 볼륨 크기
+  service:
+    type: ClusterIP          # PostgreSQL 서비스 타입
+    port: 5432               # 기본 포트
+
+readReplicas:
+  replicaCount: 0            # 읽기 전용 복제본 개수 (필요하면 1 이상 설정)
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 250m
+  limits:
+    memory: 512Mi
+    cpu: 500m

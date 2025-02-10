@@ -1,0 +1,39 @@
+global:
+  storageClass: ""
+
+kafka:
+  replicaCount: 3  # 최소 3개 이상의 Kafka 브로커 필요
+
+  controller:
+    replicaCount: 3  # KRaft 모드에서는 컨트롤러 노드가 필요
+
+  listeners:
+    client:
+      protocol: PLAINTEXT
+    interBroker:
+      protocol: PLAINTEXT
+    external:
+      enabled: true
+      protocol: PLAINTEXT
+      port: 9094
+
+  service:
+    type: ClusterIP
+    ports:
+      client: 9092
+      external: 9094
+
+  persistence:
+    enabled: true
+    size: 2Gi
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1Gi
+    cpu: 500m
+
+zookeeper:
+  enabled: false  # KRaft 모드에서는 Zookeeper 사용 안함
